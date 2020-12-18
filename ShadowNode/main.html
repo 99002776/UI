@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  *{
+   margin: 0px;
+   padding: 0px;
+  }
+  h2{
+    text-align: center;
+  }
+  body{
+   font-family: arial;
+  }
+  .card{
+       width: 50%;
+       display: inline-block;
+       box-shadow: 2px 2px 20px black;
+       border-radius: 5px; 
+       margin: 2%;
+       margin-left: 25%;
+       align-items:center;
+      }
+  .image img{
+    width: 100%;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    }
+  
+  .title{
+   
+    text-align: center;
+    padding: 10px;
+    
+   }
+  h1{
+    font-size: 20px;
+   }
+  
+  .des{
+    padding: 3px;
+    text-align: center;
+   
+    padding-top: 10px;
+          border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+  button{
+    margin-top: 40px;
+    margin-bottom: 10px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding:10px;
+  }
+  button:hover{
+    background-color: black;
+    color: white;
+    transition: .5s;
+    cursor: pointer;
+  }
+  input{
+    margin-top: 40px;
+    margin-bottom: 10px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding:5px;
+  }
+  input:hover{
+    background-color: black;
+    color: white;
+    transition: .5s;
+    cursor: pointer;
+  }
+  
+  </style>
+
+      
+      
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+      <script>
+        function displayData(){
+          //const url="http://localhost:8080/display"
+          // readhin()
+          window.open("/display")
+
+
+        }
+        function stopData(){
+          const url="http://localhost:8081/stopboat"
+          $.ajax({
+            url:url,
+            type:"GET",
+            success: function(data){
+                alert(data)
+                //  window.open("/")
+            }
+          })
+
+        }
+
+        function sendData()
+        {   
+            let obj={}
+            const url="http://localhost:8081/boat/post"
+            
+            obj.hid=$("#hin").val()
+           
+            obj.name=$("#name").val()
+            obj.model=$("#model").val()
+            obj.noOfEngines=$("#nengines").val()
+            console.log(JSON.stringify(obj));
+            // $.post(url, obj, function(data){
+            //     alert(data)
+            //     window.open("/")
+            // },"json")
+            $.ajax({
+            url:url,
+            type:"POST",
+            data:JSON.stringify(obj),
+            contentType:"application/text; charset=utf-8",
+            dataType:"text",
+            success: function(data){
+                alert(data)
+                 window.open("/")
+            }
+          })
+        }
+        
+
+</script>
+</head>
+<body>
+
+    <h2 >Boat Simulator</h2>
+    
+    <div class="card" >
+        <img src="https://robbreport.com/wp-content/uploads/2018/03/the-hinckley-sport-boat_water.jpg" alt="Avatar" style="width:100%;">
+            
+            <div class="container" style="text-align: center;">
+            <label>HIN Number:</label>
+              <input type="text" placeholder="Enter  Boat HIN Number" id="hin"/>
+            <label>Boat Name:</label>
+              <input type="text" placeholder="Enter Boat Name"  id="name"/></br>
+            <label>Boat Model:</label>
+              <input type="text" placeholder="Enter Boat Model" id="model"/>
+            <label>Number Of Engines:</label>
+              <input type="number" placeholder="Enter Number Of Engines" id="nengines"/></br>
+
+            <input type="button" value="Start Simulation" onclick="sendData()">
+            
+            <input type="button" value="Boat Dynamics" onclick="displayData()"> 
+            
+            <input type="button" value="Stop Simulation" onclick="stopData()"> 
+            
+            <!-- <input type="button" value="Start" onclick="sendData()">   -->
+            </div>
+    </div>
+
+</body>
+</html> 
